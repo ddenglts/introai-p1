@@ -1,0 +1,38 @@
+import random
+
+#consts
+ship_grid_D = 20
+
+
+ship_grid = [] #D*D int array
+#ship_grid creation
+for i in range(ship_grid_D):
+    ship_grid.append([])
+    for j in range(ship_grid_D):
+        ship_grid[i].append(0)
+
+#randomly open 1 interior cell
+ship_grid[random.randint(1,ship_grid_D-2)][random.randint(1,ship_grid_D-2)] = 1
+
+#find all cells with one open neighbor
+one_open_neighbor_cells = []
+    #identify all cells that have a single open neighbor in the 4 cardinal directions
+for i in range(ship_grid_D):
+    for j in range(ship_grid_D):
+        num_open_neighbors = 0
+        if i != 0:
+            if ship_grid[i-1][j] == 1:
+                num_open_neighbors += 1
+        if i != ship_grid_D-1:
+            if ship_grid[i+1][j] == 1:
+                num_open_neighbors += 1
+        if j != 0:
+            if ship_grid[i][j-1] == 1:
+                num_open_neighbors += 1
+        if j != ship_grid_D-1:
+            if ship_grid[i][j+1] == 1:
+                num_open_neighbors += 1
+        if num_open_neighbors == 1:
+            one_open_neighbor_cells.append((i,j))
+
+
