@@ -1,5 +1,5 @@
 import random
-
+#Hello this is Sarthak
 #consts
 ship_grid_D = 20
 
