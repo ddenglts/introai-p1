@@ -35,4 +35,3 @@ for i in range(ship_grid_D):
         if num_open_neighbors == 1:
             one_open_neighbor_cells.append((i,j))
 
-
