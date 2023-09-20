@@ -21,10 +21,11 @@ while True:
         print(ship_grid[i])
     #find all cells with one open neighbor
     one_open_neighbor_cells = []
-    num_open_neighbors = 0
+    
         #identify all closed cells that have a single open neighbor in the 4 cardinal directions
     for i in range(ship_grid_D):
         for j in range(ship_grid_D):
+            num_open_neighbors = 0
             if ship_grid[i][j] == 1:
                 continue
             if i != 0:
