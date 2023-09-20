@@ -81,16 +81,44 @@ for i in range(ship_grid_D):
                     num_open_neighbors += 1
             if num_open_neighbors == 1:
                 dead_ends.append((i,j))
-                
+  
+print("Dead ends unedited:")   
+print(dead_ends)           
 num_dead_ends = len(dead_ends)/2
 c = 0
-print(dead_ends)
 
 while c < num_dead_ends:
     dead_ends.pop(random.randint(0,len(dead_ends)-1))
     c += 1
-    
+print("Dead ends:")   
 print(dead_ends)
+
+opening_cell = []
+for i in range(len(dead_ends)):
+    r = dead_ends[i][0]
+    c = dead_ends[i][1]
+    if r != 0:
+        if ship_grid[r-1][c] == 0:
+            opening_cell.append((r-1,c))
+    if r != ship_grid_D-1:
+        if ship_grid[r+1][c] == 0:
+            opening_cell.append((r+1,c))
+    if c != 0:
+        if ship_grid[r][c-1] == 0:
+            opening_cell.append((r,c-1))
+    if c != ship_grid_D-1:
+        if ship_grid[r][c+1] == 0:
+            opening_cell.append((r,c+1))
+    cell_to_open = opening_cell[(random.randint(0,len(opening_cell)-1))]
+    ship_grid[cell_to_open[0]][cell_to_open[1]] = 1
+    
+        
+for j in range(ship_grid_D):
+    print(ship_grid[j])
+    
+print("HELLO WORLD")
+
+    
         
                 
             
