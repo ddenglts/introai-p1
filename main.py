@@ -60,4 +60,41 @@ print("Ship Grid:")
 for i in range(ship_grid_D):
     print(ship_grid[i])
 
+dead_ends = []
+    
+for i in range(ship_grid_D):
+    for j in range(ship_grid_D):
+        #check to see if cell is open
+        num_open_neighbors = 0
+        if ship_grid[i][j] == 1:
+            if i != 0:
+                if ship_grid[i-1][j] == 1:
+                    num_open_neighbors += 1
+            if i != ship_grid_D-1:
+                if ship_grid[i+1][j] == 1:
+                    num_open_neighbors += 1
+            if j != 0:
+                if ship_grid[i][j-1] == 1:
+                    num_open_neighbors += 1
+            if j != ship_grid_D-1:
+                if ship_grid[i][j+1] == 1:
+                    num_open_neighbors += 1
+            if num_open_neighbors == 1:
+                dead_ends.append((i,j))
+                
+num_dead_ends = len(dead_ends)/2
+c = 0
+print(dead_ends)
+
+while c < num_dead_ends:
+    dead_ends.pop(random.randint(0,len(dead_ends)-1))
+    c += 1
+    
+print(dead_ends)
+        
+                
+            
+            
+            
+
 
