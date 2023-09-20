@@ -1,3 +1,4 @@
+#latest version
 import random
 
 #consts
