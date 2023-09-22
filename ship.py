@@ -124,23 +124,6 @@ class Ship():
             print(self.ship_grid[j])
             
 
-        # #Spawn fire
-        # fire = {}
-        # # Will keep track of neighbors that are on fire
-        # k = 0
-        # fire.location = (random.randint(0,self.ship_grid_D-1),random.randint(0,self.ship_grid_D-1))
-        # #redo generation if fire spawns on ship
-        # while self.ship_grid[fire.location[0]][fire.location[1]] == 0:
-        #     fire.location = (random.randint(0,self.ship_grid_D-1),random.randint(0,self.ship_grid_D-1))
-
-        # self.ship_grid[fire.location[0]][fire.location[1]] == -1
-
-
-        #timestep loop
-
-
-
-
 
 
         print("HELLO WORLD")
