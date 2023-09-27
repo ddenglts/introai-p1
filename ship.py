@@ -1,8 +1,10 @@
 from bot import Bot
+import random
 class Ship():
     
     def __init__(self, ship_grid_D):
         self.ship_grid_D = ship_grid_D
+        self.q = random.random(0,1)
         self.ship_grid = [] #D*D int array
         # self.ship_grid = self.build()
         self.bot = Bot(self, 1, (0,0))
@@ -11,8 +13,7 @@ class Ship():
        
         
     def build(self):
-        import random
-        #ship_grid creation
+       #ship_grid creation
         for i in range(self.ship_grid_D):
             self.ship_grid.append([])
             for j in range(self.ship_grid_D):
@@ -124,16 +125,15 @@ class Ship():
             print(self.ship_grid[j])
             
 
-        # #Spawn fire
-        # fire = {}
-        # # Will keep track of neighbors that are on fire
-        # k = 0
-        # fire.location = (random.randint(0,self.ship_grid_D-1),random.randint(0,self.ship_grid_D-1))
-        # #redo generation if fire spawns on ship
-        # while self.ship_grid[fire.location[0]][fire.location[1]] == 0:
-        #     fire.location = (random.randint(0,self.ship_grid_D-1),random.randint(0,self.ship_grid_D-1))
+        #Spawn fire
+        fire = {}
+        # Will keep track of neighbors that are on fire
+        fire.location = (random.randint(0,self.ship_grid_D-1),random.randint(0,self.ship_grid_D-1))
+        #redo generation if fire spawns on ship
+        while self.ship_grid[fire.location[0]][fire.location[1]] == 0:
+            fire.location = (random.randint(0,self.ship_grid_D-1),random.randint(0,self.ship_grid_D-1))
 
-        # self.ship_grid[fire.location[0]][fire.location[1]] == -1
+        self.ship_grid[fire.location[0]][fire.location[1]] == -1
 
 
         #timestep loop
