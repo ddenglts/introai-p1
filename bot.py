@@ -16,6 +16,7 @@ class Bot():
     
     def move_type_1(self):
         print("move1")
+        
     def move_type_2(self):
         pass
     def move_type_3(self):
