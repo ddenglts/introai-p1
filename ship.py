@@ -146,7 +146,11 @@ class Ship():
 
         print("HELLO WORLD")
 
-
+    def is_bot_on_fire(self):
+            if self.ship_grid[self.bot.get_bot_pos()[0]][self.bot.get_bot_pos()[1]] == -1:
+                return True
+            return False
+    
                         
                     
                     
