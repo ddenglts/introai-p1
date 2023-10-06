@@ -1,14 +1,14 @@
 from bot import Bot
+from fire import Fire
 import random
 class Ship():
     
-    def __init__(self, ship_grid_D):
+    def __init__(self, ship_grid_D, bot_type):
         self.ship_grid_D = ship_grid_D
-        self.q = random.random(0,1)
+        self.q = random.random()
         self.ship_grid = [] #D*D int array
+        self.button_pos = (0,0)
         # self.ship_grid = self.build()
-        self.bot = Bot(self, 1, (0,0))
-                
         
        
         
@@ -125,34 +125,40 @@ class Ship():
             print(self.ship_grid[j])
             
 
-        #Spawn fire
-        fire = {}
-        # Will keep track of neighbors that are on fire
-        fire.location = (random.randint(0,self.ship_grid_D-1),random.randint(0,self.ship_grid_D-1))
-        #redo generation if fire spawns on ship
-        while self.ship_grid[fire.location[0]][fire.location[1]] == 0:
-            fire.location = (random.randint(0,self.ship_grid_D-1),random.randint(0,self.ship_grid_D-1))
-
-        self.ship_grid[fire.location[0]][fire.location[1]] == -1
-
-
-        #timestep loop
-
-
-
-
-
-
-
-        print("HELLO WORLD")
-
     def is_bot_on_fire(self):
             if self.ship_grid[self.bot.get_bot_pos()[0]][self.bot.get_bot_pos()[1]] == -1:
                 return True
             return False
     
-                        
-                    
+
+    def place_bot(self):
+        bot_pos = (0,0)
+        while True:
+            bot_pos = (random.randint(0,self.ship_grid_D-1),random.randint(0,self.ship_grid_D-1))
+            if self.ship_grid[bot_pos[0]][bot_pos[1]] == 1:
+                break
+        self.bot = Bot(self, 1 , bot_pos)
+
+    def place_button(self):
+        while True:
+            self.button_pos = (random.randint(0,self.ship_grid_D-1),random.randint(0,self.ship_grid_D-1))
+            if self.ship_grid[self.button_pos[0]][self.button_pos[1]] == 1:
+                break
+        self.ship_grid[self.button_pos[0]][self.button_pos[1]] = 3
+    
+    def place_fire(self):
+        fire_pos = (0,0)
+        while True:
+            fire_pos = (random.randint(0,self.ship_grid_D-1),random.randint(0,self.ship_grid_D-1))
+            if self.ship_grid[fire_pos[0]][fire_pos[1]] == 1:
+                break
+        self.fire = Fire(self, fire_pos)
+    
+    def is_bot_on_button(self):
+        if self.ship_grid[self.bot.get_bot_pos()[0]][self.bot.get_bot_pos()[1]] == 3:
+            return True
+        return False
+
                     
                     
     
