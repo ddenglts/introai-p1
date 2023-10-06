@@ -6,12 +6,13 @@ constantly recheck the amount of dead ends we have closed during one iteration o
 Can the fire and button be in the same cell?
 """
 from ship import Ship
+import time
 
 
 # Create initial state (ship, bot, button, fire)
 
 # create ship with size 5, bot type 1
-ship = Ship(100, 3)
+ship = Ship(7, 1)
 # build ship
 ship.build()
 # place bot
@@ -24,8 +25,11 @@ ship.place_fire()
 # time loop
 while True:
     print("before timestep")
-    print()
-    if not ship.bot.move():
+    for row in ship.ship_grid:
+        print(row)
+    print("bot position: ", ship.bot.get_bot_pos())
+
+    if ship.bot.move():
         print("Bot is stuck. GAME OVER!!!!!")
         break
     if ship.is_bot_on_fire():
@@ -35,11 +39,15 @@ while True:
         print("Bot is on button. YOU WIN!!!!!")
         break
     # spread fire
-    ship.spread()
+    ship.fire.spread()
     if ship.is_bot_on_fire():
         print("Bot is on fire. YOU LOSE!!!!!")
         break
-    input("Press Enter to continue...")
+    print("before timestep")
+    for row in ship.ship_grid:
+        print(row)
+    print("bot position: ", ship.bot.get_bot_pos())
+    #input("Press Enter to continue...")
     
 
 

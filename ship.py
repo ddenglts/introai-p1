@@ -153,6 +153,7 @@ class Ship():
             if self.ship_grid[fire_pos[0]][fire_pos[1]] == 1:
                 break
         self.fire = Fire(self, fire_pos)
+        self.ship_grid[fire_pos[0]][fire_pos[1]] = -1
     
     def is_bot_on_button(self):
         if self.ship_grid[self.bot.get_bot_pos()[0]][self.bot.get_bot_pos()[1]] == 3:
