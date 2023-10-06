@@ -70,7 +70,7 @@ class Bot():
             
             if self.ship.ship_grid[curr[0]][curr[1]] == 3:
                 print("Congrats! You found the button! The fire is out!")
-                return True
+                
                 
                 # Backtracking
                 self.path = []
