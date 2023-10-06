@@ -49,7 +49,7 @@ class Bot():
                         fringe.append(child)
                         parents[child] = curr  # Set the parent of this child
 
-            return False
+            if not self.path: return False
         
         #move based on path
 
