@@ -20,7 +20,9 @@ ship.place_bot()
 # place button
 ship.place_button()
 # place fire
-ship.place_fire()
+#ship.place_fire()
+
+ship.manual_set()
 
 # time loop
 while True:
@@ -32,15 +34,15 @@ while True:
     if ship.bot.move():
         print("Bot is stuck. GAME OVER!!!!!")
         break
-    if ship.is_bot_on_fire():
+    #if ship.is_bot_on_fire():
         print("Bot is on fire. YOU LOSE!!!!!")
         break
     if ship.is_bot_on_button():
         print("Bot is on button. YOU WIN!!!!!")
         break
     # spread fire
-    ship.fire.spread()
-    if ship.is_bot_on_fire():
+    #ship.fire.spread()
+    #if ship.is_bot_on_fire():
         print("Bot is on fire. YOU LOSE!!!!!")
         break
     print("before timestep")

@@ -160,6 +160,26 @@ class Ship():
             return True
         return False
 
+    def manual_set(self):
+        # binary 7x7 grid with plus made of 1s
+        grid = [
+            [0,0,0,1,0,0,0],
+            [0,0,0,1,0,0,0],
+            [0,0,0,1,0,0,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,1,0,0,0],
+            [0,0,0,1,0,0,0],
+            [0,0,0,3,0,0,0]
+        ]
+        for i in range(self.ship_grid_D):
+            for j in range(self.ship_grid_D):
+                self.ship_grid[i][j] = grid[i][j]
+        self.bot.bot_pos = (3,3)
+        self.button_pos = (0,3)
+        #self.fire.on_fire_cells[0] = (6,3)
+
+
+    
                     
                     
     
