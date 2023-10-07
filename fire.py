@@ -47,8 +47,6 @@ class Fire:
             self.grid[i[0]][i[1]] = -1
             self.on_fire_cells.append((x,y))
 
-
-    
             
             
             

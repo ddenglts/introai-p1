@@ -5,6 +5,7 @@ class Bot():
         self.bot_type = bot_type
         self.bot_pos = bot_pos
         self.path = []
+        self.move_type_1_ran = False
         if self.bot_type == 1:
             self.move = self.move_type_1
         elif self.bot_type == 2:
@@ -23,17 +24,20 @@ class Bot():
         
         print("move1")
 
-        if not self.path:
+        if not self.move_type_1_ran:
+            self.move_type_1_ran = True
             parents = {}  # Create the parents dictionary
             fringe = [self.bot_pos]
+            print("fringe init", fringe)
 
             while fringe:
+                print("fringe", fringe)
+                print("parents", parents)
                 curr = fringe.pop(0)
                 
                 if self.ship.ship_grid[curr[0]][curr[1]] == 3:
                     
                     # Backtracking
-                    self.path = []
                     while curr in parents:
                         self.path.append(curr)
                         curr = parents[curr]
@@ -45,14 +49,20 @@ class Bot():
 
                 children_array = self.get_children(curr)
                 for child in children_array:
-                    if child not in parents:  # Check if we haven't visited this child before, VERY POOR COMPLEXITY(TRY TO FIX LATER)
+                    if not (child in parents):  # Check if we haven't visited this child before, VERY POOR COMPLEXITY(TRY TO FIX LATER)
                         fringe.append(child)
                         parents[child] = curr  # Set the parent of this child
 
-            if not self.path: return False
+            if not self.path:
+                print("No path found")
+                return False
         
         #move based on path
 
+
+        if not self.path:
+                print("No path found")
+                return False
         self.bot_pos = self.path.pop(0)
         #ship will check fire collision
 
@@ -161,12 +171,12 @@ class Bot():
         x, y = curr
         children = []
         # Check surrounding positions in grid
-        if x != 0 and self.ship.ship_grid[x-1][y] == 1:
+        if (x != 0 and self.ship.ship_grid[x-1][y] == 1) or (x != 0 and self.ship.ship_grid[x-1][y] == 3):
             children.append((x-1, y))
-        if x != self.ship.ship_grid_D-1 and self.ship.ship_grid[x+1][y] == 1:
+        if (x != self.ship.ship_grid_D-1 and self.ship.ship_grid[x+1][y] == 1) or (x != self.ship.ship_grid_D-1 and self.ship.ship_grid[x+1][y] == 3) :
             children.append((x+1, y))
-        if y != 0 and self.ship.ship_grid[x][y-1] == 1:
+        if (y != 0 and self.ship.ship_grid[x][y-1] == 1) or (y != 0 and self.ship.ship_grid[x][y-1] == 3):
             children.append((x, y-1))
-        if y != self.ship.ship_grid_D-1 and self.ship.ship_grid[x][y+1] == 1:
+        if (y != self.ship.ship_grid_D-1 and self.ship.ship_grid[x][y+1] == 1) or (y != self.ship.ship_grid_D-1 and self.ship.ship_grid[x][y+1] == 3):
             children.append((x, y+1))
         return children
