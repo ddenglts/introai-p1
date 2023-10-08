@@ -46,7 +46,7 @@ def bfs(grid: List[List[int]], start: Tuple[int, int], goal: Tuple[int, int]) ->
                 visited.append(child)
                 parents[child] = curr
             fringe.append(child)
-    return [(-1,-1)]
+    return None
 
 def _get_unvisited_children(grid: List[List[int]], visited: List[Tuple[int, int]], curr: Tuple[int, int]) -> List[Tuple[int, int]]:
     """
@@ -99,3 +99,13 @@ def _copy(grid: List[List[int]]) -> List[List[int]]:
     for row in grid:
         copy.append(row.copy())
     return copy
+
+def find(grid: List[List[int]], value: int) -> Tuple[int, int]:
+    """
+    Returns the position of the first instance of value in grid
+    """
+    for i in range(len(grid)):
+        for j in range(len(grid)):
+            if grid[i][j] == value:
+                return (i,j)
+    return (-1,-1)
