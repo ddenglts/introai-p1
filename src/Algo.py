@@ -55,13 +55,13 @@ def _get_unvisited_children(grid: List[List[int]], visited: List[Tuple[int, int]
     children = []
     x, y = curr
     grid_max_ind = len(grid) - 1
-    if x != grid_max_ind and (grid[x+1][y] == 1 or grid[x+1][y] == 3):
+    if x != grid_max_ind and (grid[x+1][y] == 1 or grid[x+1][y] == 2):
         children.append((x+1,y))
-    if x != 0 and (grid[x-1][y] == 1 or grid[x-1][y] == 3):
+    if x != 0 and (grid[x-1][y] == 1 or grid[x-1][y] == 2):
         children.append((x-1,y))
-    if y != grid_max_ind and (grid[x][y+1] == 1  or grid[x][y+1] == 3):
+    if y != grid_max_ind and (grid[x][y+1] == 1  or grid[x][y+1] == 2):
         children.append((x,y+1))
-    if y != 0 and (grid[x][y-1] == 1 or grid[x][y-1] == 3):
+    if y != 0 and (grid[x][y-1] == 1 or grid[x][y-1] == 2):
         children.append((x,y-1))
 
     # does not return visited nodes
@@ -108,4 +108,4 @@ def find(grid: List[List[int]], value: int) -> Tuple[int, int]:
         for j in range(len(grid)):
             if grid[i][j] == value:
                 return (i,j)
-    return (-1,-1)
+    return None

@@ -88,4 +88,21 @@ def build(size: int) -> List[List[int]]:
         cell_to_open = opening_cell[(random.randint(0,len(opening_cell)-1))]
         grid[cell_to_open[0]][cell_to_open[1]] = 1
 
+    #place button
+    while True:
+        r = random.randint(0,size-1)
+        c = random.randint(0,size-1)
+        if grid[r][c] == 1:
+            grid[r][c] = 2
+            break
+    
+    #place fire
+    while True:
+        r = random.randint(0,size-1)
+        c = random.randint(0,size-1)
+        if grid[r][c] == 1:
+            grid[r][c] = -1
+            break
+
     return grid
+

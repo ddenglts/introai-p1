@@ -13,15 +13,19 @@ class Bot():
         elif bot_type == 4:
             self.move = self._move_4
     
-    def _move_1(self, grid: List[List[int]], button: Tuple[int, int]) -> bool:
+    def _move_1(self, grid: List[List[int]]) -> bool:
         """
         Moves the bot one step closer to the goal, using the BFS algorithm.
         Returns True if the bot moved once successfully, False if no path was found.
         """
+        button_pos = Algo.find(grid, 2)
+        if (button_pos == None):
+            print("!!! No button found??????")
+            return False
+
         # get the path to the goal
         if not self.path:
-            self.path = Algo.bfs(grid, self.pos, button)
-            print(self.path)
+            self.path = Algo.bfs(grid, self.pos, button_pos)
             if self.path == None:
                 return False
             #pop starting position so [0] is next move
