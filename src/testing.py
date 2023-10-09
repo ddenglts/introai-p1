@@ -192,7 +192,7 @@ class GridGUI:
 # ]
 
 
-scenario = Scenario(20, 2, 1)
+scenario = Scenario(10, 3, 1)
 print("bot pos: ", scenario.bot.pos)
 print(f"Flammibility is: {scenario.q * 100}%")
 grid = scenario.grid
