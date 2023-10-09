@@ -35,7 +35,8 @@ class Scenario:
         3) check if bot is on button - if so, return 1
         4) check if bot is on fire - if so, return -1
         5) advance fire
-        6) return 0
+        6) check if bot is on fire - if so, return -1 (this fixes the delay issue when bot and fire go to same cell)
+        7) return 0
 
         debug: 
         """
@@ -60,9 +61,14 @@ class Scenario:
             # 5) advance fire
             Fire.spread(self.grid, self.q)
 
+            # 6) check if bot is on fire - if so, return False (this fixes the delay issue when bot and fire go to same cell)
+            if Check.bot_on_fire(self.grid, self.bot.pos):
+                return -1
+            
+
             self.time += 1
 
-            # 6) return 0
+            # 7) return 0
             return 0
         
         

@@ -110,6 +110,9 @@ class GridGUI:
         self.scenario = scenario
         self.dot = None
         self.canvas = None
+        self.show_result = False
+        self.out = 0
+        self.line = None
         
 
     def create_grid(self):
@@ -129,12 +132,15 @@ class GridGUI:
 
     def button_click(self):
         # Update the grid and the GUI
-        out = self.scenario.timestep()
-        self.grid = self.scenario.grid
-        if out == -1 or out == 1:
-            print(out)
+        if not self.show_result:
+            self.out = self.scenario.timestep()
+            self.grid = self.scenario.grid
+            if self.out == -1 or self.out == 1:
+                print(self.out)
+                self.show_result = True
+            self.update(self.grid)
+        else:
             exit()
-        self.update(self.grid)
 
     def get_color(self, value):
         if value == 0:
@@ -149,6 +155,7 @@ class GridGUI:
         else:
             return "blue"
 
+
     def update(self, grid):
         self.grid = grid
         for i in range(len(self.grid)):
@@ -158,7 +165,12 @@ class GridGUI:
         if self.dot is not None:
             self.canvas.delete(self.dot)
         y, x = self.scenario.bot.pos
-        self.dot = self.canvas.create_oval(x*(750//len(self.grid))+(150//len(self.grid)), y*(750//len(self.grid))+(150//len(self.grid)), x*(750//len(self.grid))+(600//len(self.grid)), y*(750//len(self.grid))+(600//len(self.grid)), fill="green", outline="black")
+        if self.out == -1:
+            self.dot = self.canvas.create_oval(x*(750//len(self.grid))+(150//len(self.grid)), y*(750//len(self.grid))+(150//len(self.grid)), x*(750//len(self.grid))+(600//len(self.grid)), y*(750//len(self.grid))+(600//len(self.grid)), fill="purple", outline="black")
+        elif self.out == 1:
+            self.dot = self.canvas.create_oval(x*(750//len(self.grid))+(150//len(self.grid)), y*(750//len(self.grid))+(150//len(self.grid)), x*(750//len(self.grid))+(600//len(self.grid)), y*(750//len(self.grid))+(600//len(self.grid)), fill="green", outline="black")
+        else:
+            self.dot = self.canvas.create_oval(x*(750//len(self.grid))+(150//len(self.grid)), y*(750//len(self.grid))+(150//len(self.grid)), x*(750//len(self.grid))+(600//len(self.grid)), y*(750//len(self.grid))+(600//len(self.grid)), fill="yellow", outline="black")
 
 #create a 15x15 grid of all 1s. don't use a for loop, manually create it
 # mgrid = [
@@ -180,7 +192,7 @@ class GridGUI:
 # ]
 
 
-scenario = Scenario(10, 2, random.random())
+scenario = Scenario(20, 2, 1)
 print("bot pos: ", scenario.bot.pos)
 print(f"Flammibility is: {scenario.q * 100}%")
 grid = scenario.grid
