@@ -45,8 +45,8 @@ def bfs(grid: List[List[int]], start: Tuple[int, int], goal: Tuple[int, int]) ->
             if not (child in visited):  # Check if we haven't visited this child before, VERY POOR COMPLEXITY(TRY TO FIX LATER)
                 visited.append(child)
                 parents[child] = curr
-            fringe.append(child)
-        print("fringe: ", fringe)
+                fringe.append(child)
+
     return None
 
 def _get_unvisited_children(grid: List[List[int]], visited: List[Tuple[int, int]], curr: Tuple[int, int]) -> List[Tuple[int, int]]:
