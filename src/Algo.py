@@ -46,6 +46,7 @@ def bfs(grid: List[List[int]], start: Tuple[int, int], goal: Tuple[int, int]) ->
                 visited.append(child)
                 parents[child] = curr
             fringe.append(child)
+        print("fringe: ", fringe)
     return None
 
 def _get_unvisited_children(grid: List[List[int]], visited: List[Tuple[int, int]], curr: Tuple[int, int]) -> List[Tuple[int, int]]:

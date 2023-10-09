@@ -27,9 +27,34 @@ class Bot():
         if not self.path:
             self.path = Algo.bfs(grid, self.pos, button_pos)
             if self.path == None:
+                print("No path found")
                 return False
             #pop starting position so [0] is next move
             self.path.pop(0)
+            
+        
+        
+        # move the bot
+        self.pos = self.path.pop(0)
+        return True
+    def _move_2(self, grid: List[List[int]]) -> bool:
+        """
+        Moves the bot one step closer to the goal, using the BFS algorithm.
+        Returns True if the bot moved once successfully, False if no path was found.
+        """
+        button_pos = Algo.find(grid, 2)
+        if (button_pos == None):
+            print("!!! No button found??????")
+            return False
+
+        # get the path to the goal
+
+        self.path = Algo.bfs(grid, self.pos, button_pos)
+        if self.path == None:
+            print("No path found")
+            return False
+        #pop starting position so [0] is next move
+        self.path.pop(0)
             
         
         
