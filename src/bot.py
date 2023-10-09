@@ -27,6 +27,7 @@ class Bot():
         if not self.path:
             self.path = Algo.bfs(grid, self.pos, button_pos)
             if self.path == None:
+                print("Sorry you have been burned to a crisp")
                 print("No path found")
                 return False
             #pop starting position so [0] is next move
@@ -51,6 +52,7 @@ class Bot():
 
         self.path = Algo.bfs(grid, self.pos, button_pos)
         if self.path == None:
+            print("Sorry you have been burned to a crisp")
             print("No path found")
             return False
         #pop starting position so [0] is next move

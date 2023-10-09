@@ -1,6 +1,6 @@
 from Bot import *
 from Scenario import *
-import time
+import time, random
 import Check, Algo, Ship, Fire
 # # bfs test
 # # 7x7 grid filled with zeros, with a cross of 1s
@@ -113,13 +113,13 @@ class GridGUI:
         
 
     def create_grid(self):
-        self.canvas = tk.Canvas(self.master, width=50*len(self.grid[0]), height=50*len(self.grid), highlightthickness=0)
+        self.canvas = tk.Canvas(self.master, width=750, height=750, highlightthickness=0)
         self.canvas.grid(row=0, column=0, columnspan=len(self.grid[0]))
         for i in range(len(self.grid)):
             row = []
             for j in range(len(self.grid[i])):
                 color = self.get_color(self.grid[i][j])
-                square = self.canvas.create_rectangle(j*50, i*50, (j+1)*50, (i+1)*50, fill=color, outline="")
+                square = self.canvas.create_rectangle(j*(750//len(self.grid)), i*(750//len(self.grid)), (j+1)*(750//len(self.grid)), (i+1)*(750//len(self.grid)), fill=color, outline="black")
                 row.append(square)
             self.squares.append(row)
 
@@ -138,7 +138,8 @@ class GridGUI:
 
     def get_color(self, value):
         if value == 0:
-            return "grey"
+            # closed cells color
+            return "black"
         elif value == 1:
             return "white"
         elif value == 2:
@@ -157,7 +158,7 @@ class GridGUI:
         if self.dot is not None:
             self.canvas.delete(self.dot)
         y, x = self.scenario.bot.pos
-        self.dot = self.canvas.create_oval(x*50+20, y*50+20, x*50+30, y*50+30, fill="black")
+        self.dot = self.canvas.create_oval(x*(750//len(self.grid))+(150//len(self.grid)), y*(750//len(self.grid))+(150//len(self.grid)), x*(750//len(self.grid))+(600//len(self.grid)), y*(750//len(self.grid))+(600//len(self.grid)), fill="green", outline="black")
 
 #create a 15x15 grid of all 1s. don't use a for loop, manually create it
 # mgrid = [
@@ -179,8 +180,9 @@ class GridGUI:
 # ]
 
 
-scenario = Scenario(12, 1, 1)
+scenario = Scenario(10, 2, random.random())
 print("bot pos: ", scenario.bot.pos)
+print(f"Flammibility is: {scenario.q * 100}%")
 grid = scenario.grid
 root = tk.Tk()
 gui = GridGUI(root, grid, scenario)
