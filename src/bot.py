@@ -20,7 +20,7 @@ class Bot():
         """
         button_pos = Algo.find(grid, 2)
         if (button_pos == None):
-            print("!!! No button found??????")
+            print("!!! No button found")
             return False
 
         # get the path to the goal
@@ -45,7 +45,7 @@ class Bot():
         """
         button_pos = Algo.find(grid, 2)
         if (button_pos == None):
-            print("!!! No button found??????")
+            print("!!! No button found")
             return False
 
         # get the path to the goal
@@ -65,7 +65,7 @@ class Bot():
         button_pos = Algo.find(grid, 2)
         cautious_grid = Algo.cautious(grid)
         if (button_pos == None):
-            print("!!! No button found??????")
+            print("!!! No button found")
             return False
 
         # get the path to the goal

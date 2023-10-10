@@ -6,25 +6,26 @@ __PYCACHE__ SOMETIMES BUGS OUT FIRE.PY DURING TESTING :skull::skull::skull::skul
 def spread(grid: List[List[int]], q: float) -> None:
     """
     Spreads the fire according to the rules of the game
+    fire can burn button
     """
     on_fire_cells = _get_on_fire_cells(grid)
     for cell in on_fire_cells:
         x, y = cell
         grid_max_ind = len(grid) - 1
         #right neighbor
-        if x != grid_max_ind and grid[x+1][y] == 1:
+        if x != grid_max_ind and grid[x+1][y] != 0:
             if random.random() <= (1 - (1 - q)**_num_adj_fire_cells(grid, (x+1, y))):
                 grid[x+1][y] = -1
         #left neighbor
-        if x != 0 and grid[x-1][y] == 1:
+        if x != 0 and grid[x-1][y] != 0:
             if random.random() <= (1 - (1 - q)**_num_adj_fire_cells(grid, (x-1, y))):
                 grid[x-1][y] = -1
         #up neighbor
-        if y != grid_max_ind and grid[x][y+1] == 1:
+        if y != grid_max_ind and grid[x][y+1] != 0:
             if random.random() <= (1 - (1 - q)**_num_adj_fire_cells(grid, (x, y+1))):
                 grid[x][y+1] = -1
         #down neighbor
-        if y != 0 and grid[x][y-1] == 1:
+        if y != 0 and grid[x][y-1] != 0:
             if random.random() <= (1 - (1 - q)**_num_adj_fire_cells(grid, (x, y-1))):
                 grid[x][y-1] = -1
 
