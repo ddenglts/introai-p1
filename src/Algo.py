@@ -163,13 +163,10 @@ def root_to_all(grid: List[List[int]], root: Tuple[int, int]) -> List[List[int]]
 
     fringe = [root]
 
-    distances = [[0 for i in range(len(grid))] for j in range(len(grid))]
-
-    depth = 0
+    depths = [[0 for i in range(len(grid))] for j in range(len(grid))]
 
     while fringe:
         curr = fringe.pop(0)
-        level_size = len(fringe)
 
 
         children = _get_unvisited_children(grid, visited, curr)
@@ -177,11 +174,33 @@ def root_to_all(grid: List[List[int]], root: Tuple[int, int]) -> List[List[int]]
             if not (child in visited):
                 # Check if we haven't visited this child before, VERY POOR COMPLEXITY(TRY TO FIX LATER)
                 x, y = child
+
                 visited.append(child)
                 parents[child] = curr
                 fringe.append(child)
-                distances[x][y] = depth
+                depths[x][y] = depths[curr[0]][curr[1]] + 1
 
-    return distances
+    return depths
 
-# def util_fire
+def util_fire(grid: List[List[int]]) -> List[List[int]]:
+
+
+# def get_outer_fire(grid: List[List[int]]) -> List[List[int]]:
+#     """
+#     Returns a grid of the outer fire cells
+#     """
+
+#     outer_fire = [[0 for i in range(len(grid))] for j in range(len(grid))]
+#     for i in range(len(grid)):
+#         for j in range(len(grid)):
+#             if grid[i][j] == -1:
+#                 if i != len(grid) - 1 and grid[i+1][j] == 1:
+#                     outer_fire[i+1][j] = -1
+#                 if i != 0 and grid[i-1][j] == 1:
+#                     outer_fire[i-1][j] = -1
+#                 if j != len(grid) - 1 and grid[i][j+1] == 1:
+#                     outer_fire[i][j+1] = -1
+#                 if j != 0 and grid[i][j-1] == 1:
+#                     outer_fire[i][j-1] = -1
+#     return outer_fire
+    

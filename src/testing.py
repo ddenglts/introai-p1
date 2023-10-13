@@ -101,10 +101,11 @@ import Check, Algo, Ship, Fire
 import tkinter as tk
 
 class GridGUI:
-    def __init__(self, master, grid, scenario):
+    def __init__(self, master, grid, scenario, TEMP):
         self.master = master
         self.grid = grid
         self.squares = []
+        self.TEMP = TEMP
         self.create_grid()
         self.create_button()
         self.scenario = scenario
@@ -123,6 +124,7 @@ class GridGUI:
             for j in range(len(self.grid[i])):
                 color = self.get_color(self.grid[i][j])
                 square = self.canvas.create_rectangle(j*(750//len(self.grid)), i*(750//len(self.grid)), (j+1)*(750//len(self.grid)), (i+1)*(750//len(self.grid)), fill=color, outline="black")
+                text = self.canvas.create_text((j+0.5)*(750//len(self.grid)), (i+0.5)*(750//len(self.grid)), text=str(self.TEMP[i][j]), fill="black")
                 row.append(square)
             self.squares.append(row)
 
@@ -192,7 +194,7 @@ class GridGUI:
 # ]
 
 
-scenario = Scenario(15, 3, 1)
+scenario = Scenario(10, 3, 1)
 print("bot pos: ", scenario.bot.pos)
 print(f"Flammibility is: {scenario.q * 100}%")
 to_all = Algo.root_to_all(scenario.grid, scenario.bot.pos)
@@ -200,7 +202,7 @@ for i in to_all:
     print(i)
 grid = scenario.grid
 root = tk.Tk()
-gui = GridGUI(root, grid, scenario)
+gui = GridGUI(root, grid, scenario, to_all)
 gui.create_grid()
 gui.update(grid)
 root.mainloop()
