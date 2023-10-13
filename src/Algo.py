@@ -172,7 +172,6 @@ def ufcs(grid: List[List[int]], utils: np.ndarray, root: Tuple[int, int]) -> Lis
                 path.append(parent)
                 parent = parents[parent]
             path.reverse()
-            print(path)
             return path
         
 
@@ -209,7 +208,6 @@ def root_to_all(grid: List[List[int]], root: Tuple[int, int]) -> List[List[int]]
     depths = [[0 for i in range(len(grid))] for j in range(len(grid))]
 
     while fringe:
-        print(fringe)
         curr = fringe.pop(0)
 
 

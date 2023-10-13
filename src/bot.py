@@ -83,10 +83,14 @@ class Bot():
 
         self.pos = self.path.pop(0)
         return True
+    
+    
     def _move_4(self, grid: List[List[int]]) -> bool:
         """
         Moves the bot one step closer to the goal, using the BFS algorithm.
         Returns True if the bot moved once successfully, False if no path was found.
+
+        !!! BAD THING: THE BOT DOESNT GET WORRIED WHEN THE FIRE IS SOON TO BURN THE BUTTON, IT STILL GOES AWAY FROM THE FIRE
         """
         button_pos = Algo.find(grid, 2)
         if (button_pos == None):
