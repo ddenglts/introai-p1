@@ -2,6 +2,8 @@ from Bot import *
 from Scenario import *
 import time, random
 import Check, Algo, Ship, Fire
+import numpy as np
+
 # # bfs test
 # # 7x7 grid filled with zeros, with a cross of 1s
 # grid = [[0 for i in range(7)] for j in range(7)]
@@ -106,6 +108,7 @@ class GridGUI:
         self.grid = grid
         self.squares = []
         self.TEMP = TEMP
+        self.text = [[None for i in range(len(self.grid))] for j in range(len(self.grid))]
         self.create_grid()
         self.create_button()
         self.scenario = scenario
@@ -124,7 +127,7 @@ class GridGUI:
             for j in range(len(self.grid[i])):
                 color = self.get_color(self.grid[i][j])
                 square = self.canvas.create_rectangle(j*(750//len(self.grid)), i*(750//len(self.grid)), (j+1)*(750//len(self.grid)), (i+1)*(750//len(self.grid)), fill=color, outline="black")
-                text = self.canvas.create_text((j+0.5)*(750//len(self.grid)), (i+0.5)*(750//len(self.grid)), text=str(self.TEMP[i][j]), fill="black")
+                self.text[i][j] = self.canvas.create_text((j+0.5)*(750//len(self.grid)), (i+0.5)*(750//len(self.grid)), text=str(int(self.TEMP[i][j])), fill="black")
                 row.append(square)
             self.squares.append(row)
 
@@ -140,6 +143,9 @@ class GridGUI:
             if self.out == -1 or self.out == 1:
                 print(self.out)
                 self.show_result = True
+            
+            # update vars place
+            self.TEMP = Algo.get_utils(scenario.grid, Algo.find(scenario.grid, 2))
             self.update(self.grid)
         else:
             exit()
@@ -164,6 +170,12 @@ class GridGUI:
             for j in range(len(self.grid[i])):
                 color = self.get_color(self.grid[i][j])
                 self.canvas.itemconfig(self.squares[i][j], fill=color)
+            
+        if self.text is not None:
+            for i in range(len(self.grid)):
+                for j in range(len(self.grid[i])):
+                    self.canvas.delete(self.text[i][j])
+                    self.text[i][j] = self.canvas.create_text((j+0.5)*(750//len(self.grid)), (i+0.5)*(750//len(self.grid)), text=str(int(self.TEMP[i][j])), fill="black")
         if self.dot is not None:
             self.canvas.delete(self.dot)
         y, x = self.scenario.bot.pos
@@ -174,7 +186,7 @@ class GridGUI:
         else:
             self.dot = self.canvas.create_oval(x*(750//len(self.grid))+(150//len(self.grid)), y*(750//len(self.grid))+(150//len(self.grid)), x*(750//len(self.grid))+(600//len(self.grid)), y*(750//len(self.grid))+(600//len(self.grid)), fill="yellow", outline="black")
 
-#create a 15x15 grid of all 1s. don't use a for loop, manually create it
+
 # mgrid = [
 #     [  1, 1, 1, 1, 1, 1, 1, 1, 1, -1, 0, -1],
 #     [  1, 0, 1, 0, 1, 1, 1, 1, 0, -1, -1, -1],
@@ -197,12 +209,11 @@ class GridGUI:
 scenario = Scenario(10, 3, 1)
 print("bot pos: ", scenario.bot.pos)
 print(f"Flammibility is: {scenario.q * 100}%")
-to_all = Algo.root_to_all(scenario.grid, scenario.bot.pos)
-for i in to_all:
-    print(i)
+utils_grid = Algo.get_utils(scenario.grid, Algo.find(scenario.grid, 2))
+print(utils_grid)
 grid = scenario.grid
 root = tk.Tk()
-gui = GridGUI(root, grid, scenario, to_all)
+gui = GridGUI(root, grid, scenario, utils_grid)
 gui.create_grid()
 gui.update(grid)
 root.mainloop()

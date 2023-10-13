@@ -1,5 +1,6 @@
 from typing import List, Tuple, Dict
 from queue import PriorityQueue
+import numpy as np
 
 
 """
@@ -183,22 +184,16 @@ def root_to_all(grid: List[List[int]], root: Tuple[int, int]) -> List[List[int]]
     return depths
 
 
-def util_fire(grid: List[List[int]]) -> List[List[int]]:
+def util_fire(grid: List[List[int]]) -> np.ndarray:
     """
     Returns a grid of the utility values of the cells
     """
-    grid_util = []
-    for i in range(len(grid)):
-        row = []
-        for j in range(len(grid)):
-            if grid[i][j] == 1:
-                row.append(len(grid) - 1 - i + len(grid) - 1 - j)
-            elif grid[i][j] == 2:
-                row.append(0)
-            else:
-                row.append(-1)
-        grid_util.append(row)
-    return grid_util
+    outer_fire = get_outer_fire(grid)
+    util_fire_grid = np.zeros((len(grid), len(grid)))
+        
+    for fire in outer_fire:
+        util_fire_grid = np.add(util_fire_grid, get_fire_aura(grid, fire, int(len(grid)/2)))
+    return util_fire_grid
 
 
 def get_outer_fire(grid: List[List[int]]) -> List[Tuple[int, int]]:
@@ -210,11 +205,48 @@ def get_outer_fire(grid: List[List[int]]) -> List[Tuple[int, int]]:
         for j in range(len(grid)):
             if grid[i][j] == -1:
                 if i != len(grid) - 1 and (grid[i+1][j] == 1 or grid[i+1][j] == 2):
-                    outer_fire.append((i+1,j))
-                if i != 0 and (grid[i-1][j] == 1 or grid[i-1][j] == 2):
-                    outer_fire.append((i-1,j))
-                if j != len(grid) - 1 and (grid[i][j+1] == 1 or grid[i][j+1] == 2):
-                    outer_fire.append((i,j+1))
-                if j != 0 and (grid[i][j-1] == 1 or grid[i][j-1] == 2):
-                    outer_fire.append((i,j-1))
+                    outer_fire.append((i,j))
+                elif i != 0 and (grid[i-1][j] == 1 or grid[i-1][j] == 2):
+                    outer_fire.append((i,j))
+                elif j != len(grid) - 1 and (grid[i][j+1] == 1 or grid[i][j+1] == 2):
+                    outer_fire.append((i,j))
+                elif j != 0 and (grid[i][j-1] == 1 or grid[i][j-1] == 2):
+                    outer_fire.append((i,j))
     return outer_fire
+
+def get_fire_aura(grid: List[List[int]], root: Tuple[int, int], length: int) -> np.ndarray:
+    parents = {}
+    parents[root] = None
+
+    visited = [root]
+
+    fringe = [root]
+
+    depths = np.zeros((len(grid), len(grid)))
+
+    while fringe:
+        curr = fringe.pop(0)
+        if depths[curr[0],curr[1]] == length:
+            continue
+        children = _get_unvisited_children(grid, visited, curr)
+        # delete children that are too far away
+
+        for child in children:
+            if not (child in visited):
+                # Check if we haven't visited this child before, VERY POOR COMPLEXITY(TRY TO FIX LATER)
+                x, y = child
+
+                visited.append(child)
+                parents[child] = curr
+                fringe.append(child)
+                depths[x, y] = depths[curr[0], curr[1]] + 1
+
+    depths[depths > 0] = length - depths[depths > 0] + 1
+
+    return depths
+    
+def get_utils(grid: List[List[int]], goal: Tuple[int, int]) -> List[List[int]]:
+    to_all = root_to_all(grid, goal)
+    fire_utils = util_fire(grid)
+    utils = np.add(to_all, fire_utils)
+    return utils
