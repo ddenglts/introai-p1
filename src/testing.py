@@ -12,11 +12,11 @@ import numpy as np
 #     grid[i][3] = 1
 
 # for i in grid:
-#     print(i)
+#     ###p.rint(i)
 
 # # start at (0,3) and goal at (3,6)
 # path = Algo.bfs(grid, (0,3), (0,3))
-# print(path)
+# ###p.rint(path)
 
 """
 ------------------------------------------------------------------------------------------------------------------------
@@ -30,12 +30,12 @@ import numpy as np
 #     grid[i][3] = -1
 
 # for i in grid:
-#     print(i)
+#     ###p.rint(i)
 
 # # start at (0,3) and goal at (3,6)
 # grid_cautious = Algo.cautious(grid)
 # for i in grid_cautious:
-#     print(i)
+#     ###p.rint(i)
 
 """
 ------------------------------------------------------------------------------------------------------------------------
@@ -49,11 +49,11 @@ import numpy as np
 #     grid[i][3] = 1
 # grid[3][0] = 1
 # bot = Bot(1, (0,3))
-# print(bot.pos)
+# ###p.rint(bot.pos)
 # while True:
 #     out = bot.move(grid, (3,0))
-#     print(bot.pos)
-#     print(out)
+#     ###p.rint(bot.pos)
+#     ###p.rint(out)
 #     if (out == False) or Check.bot_on_button(grid, bot.pos) == True:
 #         break
 
@@ -64,7 +64,7 @@ import numpy as np
 # # ship gen test
 # ship = Ship.build(10)
 # for i in ship:
-#     print(i)
+#     ###p.rint(i)
 
 """
 ------------------------------------------------------------------------------------------------------------------------
@@ -77,12 +77,12 @@ import numpy as np
 #     grid[i][3] = 1
 # grid[3][0] = -1
 # for i in grid:
-#     print(i)
+#     ###p.rint(i)
 # while True:
 #     Fire.spread(grid, 1)
-#     print("good")
+#     ###p.rint("good")
 #     for i in grid:
-#         print(i)
+#         ###p.rint(i)
 #     input("Press Enter to continue...")
 
 """
@@ -94,7 +94,8 @@ import numpy as np
 
 # while True:
 #     out = scenario.timestep()
-#     print(out)
+
+#     ###p.rint(out)
 #     if out == -1 or out == 1:
 #         break
 #     input("Press Enter to continue...")
@@ -141,7 +142,6 @@ class GridGUI:
             self.out = self.scenario.timestep()
             self.grid = self.scenario.grid
             if self.out == -1 or self.out == 1:
-                print(self.out)
                 self.show_result = True
             
             # update vars place
@@ -208,10 +208,10 @@ class GridGUI:
 
 
 scenario = Scenario(10, 4, 1)
-print("bot pos: ", scenario.bot.pos)
-print(f"Flammibility is: {scenario.q * 100}%")
+###p.rint("bot pos: ", scenario.bot.pos)
+###p.rint(f"Flammibility is: {scenario.q * 100}%")
 utils_grid = Algo.get_utils(scenario.grid, Algo.find(scenario.grid, 2))
-print(utils_grid)
+###p.rint(utils_grid)
 grid = scenario.grid
 root = tk.Tk()
 gui = GridGUI(root, grid, scenario, utils_grid)

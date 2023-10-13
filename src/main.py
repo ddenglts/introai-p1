@@ -1,55 +1,62 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from Scenario import *
+import multiprocess
+import time
 
-bot1 = []
-bot2 = []
-bot3 = []
-bot4 = []
 
-# I've replaced range with np.arange for the decimal increments
-for q in np.arange(0, 1.01, 0.1):
-    for bot_type in range(1, 4):  # Adjusted to include bot 4
-        for i in range(25):
-            scenario = Scenario(10, bot_type, q)
+def do_trials(bot_type):
+    pass
+
+    BOT_TESTS_PER_Q = 10
+    Q_INCREMENT = 0.2
+    GRID_SIZE = 10
+
+    num_tests = (int(1/Q_INCREMENT) + 1) * BOT_TESTS_PER_Q
+
+    test_num = 0
+
+    #q -> success rates
+    tests = np.zeros((4, int(1/Q_INCREMENT) + 1, BOT_TESTS_PER_Q))
+
+    for q in np.arange(0, 1 + Q_INCREMENT, Q_INCREMENT):
+        for i in range(BOT_TESTS_PER_Q):
+            scenario = Scenario(GRID_SIZE, bot_type, q)
             while True:
                 out = scenario.timestep()
                 if out in [1, -1]:
-                    if bot_type == 1:
-                        bot1.append((scenario.q, out))
-                    elif bot_type == 2:
-                        bot2.append((scenario.q, out))
-                    elif bot_type == 3:
-                        bot3.append((scenario.q, out))
-                    # elif bot_type == 4:
-                    #     bot4.append((scenario.q, out))
+                    tests[bot_type - 1, int(q/Q_INCREMENT), i] = out
+                    test_num += 1
+                    print(f"Bot {bot_type} test {test_num}/{num_tests} done")
                     break
-            print("Scenario " + str(i) + " finished")
 
-# Function to compute the success rate
-def compute_success_rate(data):
-    q_values = np.arange(0, 1.01, 0.1)
-    rates = []
-    for q in q_values:
-        successes = sum(1 for x in data if x[0] == q and x[1] == 1)
-        total = sum(1 for x in data if x[0] == q)
-        rate = successes / total if total != 0 else 0
-        rates.append(rate)
-    return rates
 
-# Plotting the data
-plt.figure(figsize=(10, 6))
+    # average out tests
+    tests_avg = np.zeros((4, int(1/Q_INCREMENT) + 1))
+    for q in np.arange(0, 1 + Q_INCREMENT, Q_INCREMENT):
+        tests_avg[bot_type - 1, int(q/Q_INCREMENT)] = np.average(tests[bot_type - 1, int(q/Q_INCREMENT)])
 
-plt.plot(np.arange(0, 1.01, 0.1), compute_success_rate(bot1), label='Bot 1')
-plt.plot(np.arange(0, 1.01, 0.1), compute_success_rate(bot2), label='Bot 2')
-plt.plot(np.arange(0, 1.01, 0.1), compute_success_rate(bot3), label='Bot 3')
-# plt.plot(np.arange(0, 1.01, 0.01), compute_success_rate(bot4), label='Bot 4')
 
-plt.title('Success Rate of Bots')
-plt.xlabel('q value')
-plt.ylabel('Success Rate')
-plt.xlim(0, 1)
-plt.ylim(0, 1)
-plt.grid(True)
-plt.legend()
-plt.show()
+
+    # save to file
+    filename = f'tests_bot{bot_type}_{int(time.time())}.npy'
+    np.save(filename, tests_avg)
+
+
+bot1 = multiprocess.Process(target=do_trials, args=(1,))
+bot2 = multiprocess.Process(target=do_trials, args=(2,))
+bot3 = multiprocess.Process(target=do_trials, args=(3,))
+bot4 = multiprocess.Process(target=do_trials, args=(4,))
+
+bot1.start()
+bot2.start()
+bot3.start()
+bot4.start()
+
+bot1.join()
+bot2.join()
+bot3.join()
+bot4.join()
+
+
+print("done collecting avgs")

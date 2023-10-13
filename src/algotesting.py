@@ -9,4 +9,4 @@ grid[0][1] = -1
 
 utils = np.zeros((7,7))
 
-print(Algo.ufcs(grid, utils, (6,6)))
+###p.rint(Algo.ufcs(grid, utils, (6,6)))
