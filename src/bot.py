@@ -105,4 +105,4 @@ class Bot():
         # move the bot
         self.pos = self.path.pop(0)
         return True
-        
+
