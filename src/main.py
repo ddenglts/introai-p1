@@ -8,9 +8,9 @@ import time
 def do_trials(bot_type):
     pass
 
-    BOT_TESTS_PER_Q = 100
+    BOT_TESTS_PER_Q = 50
     Q_INCREMENT = 0.05
-    GRID_SIZE = 25
+    GRID_SIZE = 50
 
     num_tests = int(1/Q_INCREMENT) * BOT_TESTS_PER_Q
 
@@ -33,9 +33,8 @@ def do_trials(bot_type):
 
     # average out tests
     tests_avg = np.zeros((4, int(1/Q_INCREMENT)))
-    for bot_type in range(4):
-        for q in np.arange(0, 1, Q_INCREMENT):
-            tests_avg[bot_type, int(q/Q_INCREMENT)] = np.average(tests[bot_type, int(q/Q_INCREMENT)])
+    for q in np.arange(0, 1, Q_INCREMENT):
+        tests_avg[bot_type, int(q/Q_INCREMENT)] = np.average(tests[bot_type, int(q/Q_INCREMENT)])
 
 
 
