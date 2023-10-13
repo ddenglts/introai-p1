@@ -115,7 +115,7 @@ def find(grid: List[List[int]], value: int) -> Tuple[int, int]:
                 return (i,j)
     return None
 
-def ufcs(grid: List[List[int]], utils: List[List[int]], root: Tuple[int, int]) -> List[List[int]]:
+def ufcs(grid: List[List[int]], utils: np.ndarray, root: Tuple[int, int]) -> List[Tuple[int, int]]:
     
     """
     Returns a grid of the shortest path from root to all other nodes
@@ -127,24 +127,67 @@ def ufcs(grid: List[List[int]], utils: List[List[int]], root: Tuple[int, int]) -
     5(from fire) + 5(from distance from button) = 10
     """
     
+    # goal = find(grid, 2)
+    # distances = {}
+    # prev = {}
+    # fringe = PriorityQueue()
+    # distances[root] = 0
+    # prev[root] = None
+    # fringe.put(root, 0 )
+    # while fringe:
+    #     curr = fringe.get()
+    #     if curr is goal:
+    #         return "Success!", prev, distances
+    #     for child in curr:
+    #         temp_dist = distances[curr] + utils[child]
+    #         if child not in distances or temp_dist < distances[ child ]:
+    #             distances[ child ] = temp_dist
+    #             prev[ child ] = curr
+    #             fringe.put( child, temp_dist )
+    #     return "Failure", None, None
+
+
     goal = find(grid, 2)
-    distances = {}
-    prev = {}
+
+    parents = {}
+    parents[root] = None
+    
+    distances = {root: 0}
+
     fringe = PriorityQueue()
-    distances[root] = 0
-    prev[root] = None
-    fringe.put(root, 0 )
+    fringe.put((root, 0))
+
+    path = []
+
+
     while fringe:
+        print(distances)
         curr = fringe.get()
-        if curr is goal:
-            return "Success!", prev, distances
-        for child in curr:
-            temp_dist = distances[curr] + utils[child]
-            if child not in distances or temp_dist < distances[ child ]:
-                distances[ child ] = temp_dist
-                prev[ child ] = curr
-                fringe.put( child, temp_dist )
-        return "Failure", None, None
+
+        # found goal
+        if curr[0] == goal:
+            
+            # Backtracking
+            path.append(curr[0])
+            parent = parents[curr[0]]
+            while parent != None:
+                path.append(parent)
+                parent = parents[parent]
+            path.reverse()
+            print(path)
+            return path
+        
+
+        children = _get_unvisited_children(grid, distances, curr[0])
+        for child in children:
+            temp_dist = distances[curr[0]] + utils[child[0], child[1]]
+            if (not (child in distances)) or (temp_dist < distances[child]):  # Check if we haven't visited this child before, VERY POOR COMPLEXITY(TRY TO FIX LATER)
+                distances[child] = temp_dist
+                parents[child] = curr
+                fringe.put((child, temp_dist))
+
+    return None
+    
     
 
 def root_to_all(grid: List[List[int]], root: Tuple[int, int]) -> List[List[int]]:
@@ -168,6 +211,7 @@ def root_to_all(grid: List[List[int]], root: Tuple[int, int]) -> List[List[int]]
     depths = [[0 for i in range(len(grid))] for j in range(len(grid))]
 
     while fringe:
+        print(fringe)
         curr = fringe.pop(0)
 
 
@@ -250,4 +294,5 @@ def get_utils(grid: List[List[int]], goal: Tuple[int, int]) -> List[List[int]]:
     to_all = root_to_all(grid, goal)
     fire_utils = util_fire(grid)
     utils = np.add(to_all, fire_utils)
+    utils[find(grid, 2)] = 0
     return utils
