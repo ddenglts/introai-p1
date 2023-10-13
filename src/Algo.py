@@ -159,17 +159,15 @@ def ufcs(grid: List[List[int]], utils: np.ndarray, root: Tuple[int, int]) -> Lis
 
     path = []
 
-
-    while fringe:
-        print(distances)
-        curr = fringe.get()
+    while not fringe.empty():
+        curr, curr_cost = fringe.get()
 
         # found goal
-        if curr[0] == goal:
+        if curr == goal:
             
             # Backtracking
-            path.append(curr[0])
-            parent = parents[curr[0]]
+            path.append(curr)
+            parent = parents[curr]
             while parent != None:
                 path.append(parent)
                 parent = parents[parent]
@@ -178,9 +176,9 @@ def ufcs(grid: List[List[int]], utils: np.ndarray, root: Tuple[int, int]) -> Lis
             return path
         
 
-        children = _get_unvisited_children(grid, distances, curr[0])
+        children = _get_unvisited_children(grid, distances, curr)
         for child in children:
-            temp_dist = distances[curr[0]] + utils[child[0], child[1]]
+            temp_dist = distances[curr] + utils[child[0], child[1]]
             if (not (child in distances)) or (temp_dist < distances[child]):  # Check if we haven't visited this child before, VERY POOR COMPLEXITY(TRY TO FIX LATER)
                 distances[child] = temp_dist
                 parents[child] = curr
