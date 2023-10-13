@@ -4,9 +4,9 @@ from Scenario import *
 import glob
 
 
-BOT_TESTS_PER_Q = 10
-Q_INCREMENT = 0.2
-GRID_SIZE = 10
+BOT_TESTS_PER_Q = 100
+Q_INCREMENT = 0.05
+GRID_SIZE = 50
 
 
 # Load all files that match the pattern 'tests_*.npy'
