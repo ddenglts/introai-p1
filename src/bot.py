@@ -95,7 +95,7 @@ class Bot():
 
         # get the path to the goal
 
-        self.path = Algo.ufcs(grid, self.pos, button_pos)
+        self.path = Algo.ufcs(grid, Algo.get_utils(grid, Algo.find(grid, 2)), button_pos)
         if self.path == None:
             print("Sorry you have been burned to a crisp")
             print("No path found")
