@@ -145,7 +145,8 @@ class GridGUI:
                 self.show_result = True
             
             # update vars place
-            self.TEMP = Algo.get_utils(scenario.grid, Algo.find(scenario.grid, 2))
+            if Algo.find(scenario.grid, 2) != None:
+                self.TEMP = Algo.get_utils(scenario.grid, Algo.find(scenario.grid, 2))
             self.update(self.grid)
         else:
             exit()

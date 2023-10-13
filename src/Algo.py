@@ -146,7 +146,7 @@ def ufcs(grid: List[List[int]], utils: np.ndarray, root: Tuple[int, int]) -> Lis
     #             fringe.put( child, temp_dist )
     #     return "Failure", None, None
 
-
+    print("ufcs")
     goal = find(grid, 2)
 
     parents = {}
@@ -161,7 +161,6 @@ def ufcs(grid: List[List[int]], utils: np.ndarray, root: Tuple[int, int]) -> Lis
 
 
     while fringe:
-        print(distances)
         curr = fringe.get()
 
         # found goal
@@ -174,16 +173,15 @@ def ufcs(grid: List[List[int]], utils: np.ndarray, root: Tuple[int, int]) -> Lis
                 path.append(parent)
                 parent = parents[parent]
             path.reverse()
-            print(path)
             return path
         
 
-        children = _get_unvisited_children(grid, distances, curr[0])
+        children = _get_unvisited_children(grid, [(-1,-1)], curr[0])
         for child in children:
             temp_dist = distances[curr[0]] + utils[child[0], child[1]]
             if (not (child in distances)) or (temp_dist < distances[child]):  # Check if we haven't visited this child before, VERY POOR COMPLEXITY(TRY TO FIX LATER)
                 distances[child] = temp_dist
-                parents[child] = curr
+                parents[child] = curr[0]
                 fringe.put((child, temp_dist))
 
     return None
@@ -201,6 +199,10 @@ def root_to_all(grid: List[List[int]], root: Tuple[int, int]) -> List[List[int]]
     Returns [(-1,-1)] if no path is found.
     """
 
+    if root == None:
+        print("root is none, NO BUTTON")
+        return None
+
     parents = {}
     parents[root] = None
 
@@ -211,7 +213,6 @@ def root_to_all(grid: List[List[int]], root: Tuple[int, int]) -> List[List[int]]
     depths = [[0 for i in range(len(grid))] for j in range(len(grid))]
 
     while fringe:
-        print(fringe)
         curr = fringe.pop(0)
 
 
