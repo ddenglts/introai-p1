@@ -4,9 +4,9 @@ from Scenario import *
 import glob
 
 
-TOTAL_BOT_TESTS_PER_Q = 100
-Q_INCREMENT = 0.05
-GRID_SIZE = 25
+BOT_TESTS_PER_Q = 10
+Q_INCREMENT = 0.2
+GRID_SIZE = 10
 
 
 # Load all files that match the pattern 'tests_*.npy'
@@ -32,7 +32,7 @@ plt.title('Success Rate of Bots')
 plt.xlabel('q value')
 plt.ylabel('Success Rate')
 plt.xlim(0, 1)
-plt.ylim(-1, 1)
+plt.ylim(0, 100)
 plt.grid(True)
 plt.legend()
 plt.show()
