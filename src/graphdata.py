@@ -1,14 +1,18 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from Scenario import *
+import glob
 
 
-TOTAL_BOT_TESTS_PER_Q = 40
-Q_INCREMENT = 0.1
-GRID_SIZE = 10
+TOTAL_BOT_TESTS_PER_Q = 100
+Q_INCREMENT = 0.05
+GRID_SIZE = 25
 
 
-tests_avg = np.load('tests.npy')
+# Load all files that match the pattern 'tests_*.npy'
+files = glob.glob('tests_bot*.npy')
+tests_avg = [np.load(file) for file in files]
+tests_avg = np.add(np.add(tests_avg[0], tests_avg[1]), np.add(tests_avg[2], tests_avg[3]))
 
 
 

@@ -3,6 +3,7 @@ from queue import PriorityQueue
 import numpy as np
 import math
 from collections import deque
+from heapq import heappush, heappop
 
 
 """
@@ -48,6 +49,58 @@ def bfs(grid: List[List[int]], start: Tuple[int, int], goal: Tuple[int, int]) ->
                 fringe.append(child)
 
     return None
+
+
+# def bfs(grid: List[List[int]], start: Tuple[int, int], goal: Tuple[int, int]) -> Optional[List[Tuple[int, int]]]:
+#     """
+#     A* search
+
+#     Returns a list of tuples of the path, where [0] is start and [-1] is goal.
+#     Returns None if no path is found.
+#     """
+
+#     parents = {}
+#     parents[start] = None
+
+#     g_scores = {start: 0}
+#     f_scores = {start: _heuristic(start, goal)}
+
+#     visited = {start}
+
+#     fringe = [(f_scores[start], start)]
+
+#     while fringe:
+#         curr_f, curr = heappop(fringe)
+
+#         # found goal
+#         if curr == goal:
+#             # Backtracking
+#             path = [curr]
+#             parent = parents[curr]
+#             while parent is not None:
+#                 path.append(parent)
+#                 parent = parents[parent]
+#             path.reverse()
+#             return path
+
+#         children = _get_unvisited_children(grid, visited, curr)
+#         for child in children:
+#             g_score = g_scores[curr] + 1
+#             if child in g_scores and g_score >= g_scores[child]:
+#                 continue
+#             visited.add(child)
+#             parents[child] = curr
+#             g_scores[child] = g_score
+#             f_scores[child] = g_score + _heuristic(child, goal)
+#             heappush(fringe, (f_scores[child], child))
+
+#     return None
+
+# def _heuristic(node: Tuple[int, int], goal: Tuple[int, int]) -> float:
+#     """
+#     Returns the Euclidean distance between node and goal
+#     """
+#     return ((node[0] - goal[0]) ** 2 + (node[1] - goal[1]) ** 2) ** 0.5
 
 
 def _get_unvisited_children(grid: List[List[int]], visited: Set[Tuple[int, int]], curr: Tuple[int, int]) -> List[Tuple[int, int]]:

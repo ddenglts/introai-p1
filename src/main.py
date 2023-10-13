@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from Scenario import *
 import multiprocessing
+import time
 
 
 def do_trials(bot_type):
@@ -39,7 +40,8 @@ def do_trials(bot_type):
 
 
     # save to file
-    np.save(f'tests_bot{bot_type}.npy', tests_avg)
+    filename = f'tests_bot{bot_type}_{int(time.time())}.npy'
+    np.save(filename, tests_avg)
 
 
 bot1 = multiprocessing.Process(target=do_trials, args=(1,))
