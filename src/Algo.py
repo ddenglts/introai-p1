@@ -131,7 +131,7 @@ def ufcs(grid: List[List[int]], utils: List[List[int]], root: Tuple[int, int]) -
     fringe = PriorityQueue()
     distances[root] = 0
     prev[root] = None
-    fringe.put(root, priority = 0 )
+    fringe.put(root, 0 )
     while fringe:
         curr = fringe.get()
         if curr is goal:

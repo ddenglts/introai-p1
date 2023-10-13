@@ -194,7 +194,7 @@ class GridGUI:
 # ]
 
 
-scenario = Scenario(10, 3, 1)
+scenario = Scenario(10, 4, 1)
 print("bot pos: ", scenario.bot.pos)
 print(f"Flammibility is: {scenario.q * 100}%")
 to_all = Algo.root_to_all(scenario.grid, scenario.bot.pos)
