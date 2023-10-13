@@ -51,6 +51,7 @@ def bfs(grid: List[List[int]], start: Tuple[int, int], goal: Tuple[int, int]) ->
     return None
 
 
+
 # def bfs(grid: List[List[int]], start: Tuple[int, int], goal: Tuple[int, int]) -> Optional[List[Tuple[int, int]]]:
 #     """
 #     A* search
@@ -110,6 +111,7 @@ def _get_unvisited_children(grid: List[List[int]], visited: Set[Tuple[int, int]]
     children = []
     x, y = curr
     grid_max_ind = len(grid) - 1
+
     if x != grid_max_ind and (grid[x+1][y] == 1 or grid[x+1][y] == 2) and (x+1, y) not in visited:
         children.append((x+1,y))
     if x != 0 and (grid[x-1][y] == 1 or grid[x-1][y] == 2) and (x-1, y) not in visited:

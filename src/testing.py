@@ -94,6 +94,7 @@ import numpy as np
 
 # while True:
 #     out = scenario.timestep()
+
 #     ###p.rint(out)
 #     if out == -1 or out == 1:
 #         break
@@ -141,7 +142,6 @@ class GridGUI:
             self.out = self.scenario.timestep()
             self.grid = self.scenario.grid
             if self.out == -1 or self.out == 1:
-                ###p.rint(self.out)
                 self.show_result = True
             
             # update vars place

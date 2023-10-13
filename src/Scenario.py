@@ -6,8 +6,6 @@ import random
 class Scenario:
     def __init__(self, grid_size: int, bot_type: int, q: float, manual_grid = None, manual_bot_pos = None) -> None:
         # debug: ###p.rints out init grid and bot position
-
-
         # builds ship grid to specs
         # places fire and button
         if manual_grid == None:
