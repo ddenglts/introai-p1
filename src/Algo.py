@@ -183,24 +183,23 @@ def root_to_all(grid: List[List[int]], root: Tuple[int, int]) -> List[List[int]]
     return depths
 
 def util_fire(grid: List[List[int]]) -> List[List[int]]:
+    pass
 
 
-# def get_outer_fire(grid: List[List[int]]) -> List[List[int]]:
-#     """
-#     Returns a grid of the outer fire cells
-#     """
-
-#     outer_fire = [[0 for i in range(len(grid))] for j in range(len(grid))]
-#     for i in range(len(grid)):
-#         for j in range(len(grid)):
-#             if grid[i][j] == -1:
-#                 if i != len(grid) - 1 and grid[i+1][j] == 1:
-#                     outer_fire[i+1][j] = -1
-#                 if i != 0 and grid[i-1][j] == 1:
-#                     outer_fire[i-1][j] = -1
-#                 if j != len(grid) - 1 and grid[i][j+1] == 1:
-#                     outer_fire[i][j+1] = -1
-#                 if j != 0 and grid[i][j-1] == 1:
-#                     outer_fire[i][j-1] = -1
-#     return outer_fire
-    
+def get_outer_fire(grid: List[List[int]]) -> List[List[int]]:
+    """
+    Returns a grid of the outer fire cells
+    """
+    outer_fire = [[0 for i in range(len(grid))] for j in range(len(grid))]
+    for i in range(len(grid)):
+        for j in range(len(grid)):
+            if grid[i][j] == -1:
+                if i != len(grid) - 1 and grid[i+1][j] == 1:
+                    outer_fire[i+1][j] = -1
+                if i != 0 and grid[i-1][j] == 1:
+                    outer_fire[i-1][j] = -1
+                if j != len(grid) - 1 and grid[i][j+1] == 1:
+                    outer_fire[i][j+1] = -1
+                if j != 0 and grid[i][j-1] == 1:
+                    outer_fire[i][j-1] = -1
+    return outer_fire
