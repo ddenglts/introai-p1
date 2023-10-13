@@ -12,14 +12,14 @@ def do_trials(bot_type):
     Q_INCREMENT = 0.05
     GRID_SIZE = 50
 
-    num_tests = int(1/Q_INCREMENT) * BOT_TESTS_PER_Q
+    num_tests = (int(1/Q_INCREMENT) + 1) * BOT_TESTS_PER_Q
 
     test_num = 0
 
     #q -> success rates
-    tests = np.zeros((4, int(1/Q_INCREMENT), BOT_TESTS_PER_Q))
+    tests = np.zeros((4, int(1/Q_INCREMENT) + 1, BOT_TESTS_PER_Q))
 
-    for q in np.arange(0, 1, Q_INCREMENT):
+    for q in np.arange(0, 1 + Q_INCREMENT, Q_INCREMENT):
         for i in range(BOT_TESTS_PER_Q):
             scenario = Scenario(GRID_SIZE, bot_type, q)
             while True:
@@ -32,8 +32,8 @@ def do_trials(bot_type):
 
 
     # average out tests
-    tests_avg = np.zeros((4, int(1/Q_INCREMENT)))
-    for q in np.arange(0, 1, Q_INCREMENT):
+    tests_avg = np.zeros((4, int(1/Q_INCREMENT) + 1))
+    for q in np.arange(0, 1 + Q_INCREMENT, Q_INCREMENT):
         tests_avg[bot_type, int(q/Q_INCREMENT)] = np.average(tests[bot_type, int(q/Q_INCREMENT)])
 
 
