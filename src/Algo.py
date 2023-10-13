@@ -113,7 +113,7 @@ def find(grid: List[List[int]], value: int) -> Tuple[int, int]:
                 return (i,j)
     return None
 
-def dijkstras(grid: List[List[int]],utils: List[List[int]], root: Tuple[int, int]) -> List[List[int]]:
+def ufcs(grid: List[List[int]], utils: List[List[int]], root: Tuple[int, int]) -> List[List[int]]:
     
     """
     Returns a grid of the shortest path from root to all other nodes
@@ -137,7 +137,7 @@ def dijkstras(grid: List[List[int]],utils: List[List[int]], root: Tuple[int, int
         if curr is goal:
             return "Success!", prev, distances
         for child in curr:
-            temp_dist = distances[curr] + cost( curr, child )
+            temp_dist = distances[curr] + utils[child]
             if child not in distances or temp_dist < distances[ child ]:
                 distances[ child ] = temp_dist
                 prev[ child ] = curr
@@ -182,24 +182,39 @@ def root_to_all(grid: List[List[int]], root: Tuple[int, int]) -> List[List[int]]
 
     return depths
 
+
 def util_fire(grid: List[List[int]]) -> List[List[int]]:
-    pass
+    """
+    Returns a grid of the utility values of the cells
+    """
+    grid_util = []
+    for i in range(len(grid)):
+        row = []
+        for j in range(len(grid)):
+            if grid[i][j] == 1:
+                row.append(len(grid) - 1 - i + len(grid) - 1 - j)
+            elif grid[i][j] == 2:
+                row.append(0)
+            else:
+                row.append(-1)
+        grid_util.append(row)
+    return grid_util
 
 
-def get_outer_fire(grid: List[List[int]]) -> List[List[int]]:
+def get_outer_fire(grid: List[List[int]]) -> List[Tuple[int, int]]:
     """
     Returns a grid of the outer fire cells
     """
-    outer_fire = [[0 for i in range(len(grid))] for j in range(len(grid))]
+    outer_fire = []
     for i in range(len(grid)):
         for j in range(len(grid)):
             if grid[i][j] == -1:
-                if i != len(grid) - 1 and grid[i+1][j] == 1:
-                    outer_fire[i+1][j] = -1
-                if i != 0 and grid[i-1][j] == 1:
-                    outer_fire[i-1][j] = -1
-                if j != len(grid) - 1 and grid[i][j+1] == 1:
-                    outer_fire[i][j+1] = -1
-                if j != 0 and grid[i][j-1] == 1:
-                    outer_fire[i][j-1] = -1
+                if i != len(grid) - 1 and (grid[i+1][j] == 1 or grid[i+1][j] == 2):
+                    outer_fire.append((i+1,j))
+                if i != 0 and (grid[i-1][j] == 1 or grid[i-1][j] == 2):
+                    outer_fire.append((i-1,j))
+                if j != len(grid) - 1 and (grid[i][j+1] == 1 or grid[i][j+1] == 2):
+                    outer_fire.append((i,j+1))
+                if j != 0 and (grid[i][j-1] == 1 or grid[i][j-1] == 2):
+                    outer_fire.append((i,j-1))
     return outer_fire
