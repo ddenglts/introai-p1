@@ -1,0 +1,40 @@
+1. Explain the design and algorithm for your Bot 4, being as specific as possible as to what your bot is actually
+doing. How does your bot factor in the available information to make more informed decisions about what to
+do next?
+
+2, For each bot, repeatedly generate test environments and evaluate the performance of the bot, for many values
+of q between 0 and 1. Graph the probability (or average frequency, rather) of the bot successfully putting out
+the fire. Be sure to repeat the experiment enough times to get accurate results for each bot, and each tested
+value of q.
+
+3, When bots fail or get trapped by the fire, why do they fail? Was there a better decision they could have made
+that would have saved them? Why or why not? Support your conclusions.
+Bot1: 
+Bot 1 fails or gets trapped by fire because it does not consider the spread of the fire. Bot 1 is only aware of the initial fire cell
+and does not where the fire is spreading. Therefore, although bot1 will choose the quickest path, it will not choose the safest path
+and does not have the ability to adjust its path. It can make a better decision by continuosly tracking the spread of the fire.
+This will allow Bot 1 it consider a new approach and path after the each timestep.
+
+Bot 2: Bot 2 fails or gets trapped by fire because it doesn't look into the future and consider how the fire may spread. Although Bot 2
+keeps track of the spread of the fire, it does not consider that traveling on cells that are adjacent to the fire can mean that it can bbe 
+burned in the next timestep. It can make a better decision by looking into the future and not only track the spread of the fire, but its
+ability to spread to adjacent cells during the next timestep. This can help prevent the Bot from being burned as often and improve its
+success rate.
+
+Bot 3: Bot 3 fails or gets trapped by the fire because it only looks 1 timestep into the future and does not consider how the fire may 
+spread after that. Although Bot 3 will attempt to avoid cells adjacent to the fire, assuming that a path exists, it can still be easily
+trapped as it does not look past one timestep in the future. As a result, Bot 3 is more likely to struggle in bigger ship sizes, as it
+will still only look one timestep into the future and can easily be trapped by the fire especially when flammibility is high. It can 
+make a better decision by considering more than 1 timestep in the future. As a result, Bot 3 is more likely to escape the fire, and less
+likely to get trapped. In the interest computational power, we will scale how far Bot 3 looks into the future based on the size of the
+ship. For example, if the size of the ship is 10 x 10, it will not look as far into the future compared to a ship that has a size 100 x 100.
+
+4. Speculate on how you might construct the ideal bot. What information would it use, what information would
+it compute, and how?
+
+EVERY timestep, our ideal bot would first get the position of the button, fires, itself, and the layout of the ship. It would also
+ideally get the flammibility of the ship. Using this information, the bot will construct a simulation of the ship, fires, button, etc.
+It would then simulate its model (taking q into account) for ideally n -> infinity times, or a very big number. 
+The simulation would be similar to the code used to actually update ship stuff according to timestep.
+It would then look at the outcomes of the simulations. It would then look at what step (1 step) the bots that reached the button took. 
+It would then take the most common step out of those bots and execute it.

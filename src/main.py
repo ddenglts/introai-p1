@@ -1,14 +1,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from Scenario import *
-import multiprocessing
+import multiprocess
 import time
 
 
 def do_trials(bot_type):
-    pass
+    pregened = np.load('shipbot.py')
 
-    BOT_TESTS_PER_Q = 100
+    BOT_TESTS_PER_Q = np.size(pregened, 0)
     Q_INCREMENT = 0.05
     GRID_SIZE = 50
 
@@ -21,7 +21,7 @@ def do_trials(bot_type):
 
     for q in np.arange(0, 1 + Q_INCREMENT, Q_INCREMENT):
         for i in range(BOT_TESTS_PER_Q):
-            scenario = Scenario(GRID_SIZE, bot_type, q)
+            scenario = Scenario(GRID_SIZE, bot_type, q, manual_grid=pregened[i, 0], manual_bot_pos=pregened[i, 1])
             while True:
                 out = scenario.timestep()
                 if out in [1, -1]:
@@ -43,10 +43,10 @@ def do_trials(bot_type):
     np.save(filename, tests_avg)
 
 
-bot1 = multiprocessing.Process(target=do_trials, args=(1,))
-bot2 = multiprocessing.Process(target=do_trials, args=(2,))
-bot3 = multiprocessing.Process(target=do_trials, args=(3,))
-bot4 = multiprocessing.Process(target=do_trials, args=(4,))
+bot1 = multiprocess.Process(target=do_trials, args=(1,))
+bot2 = multiprocess.Process(target=do_trials, args=(2,))
+bot3 = multiprocess.Process(target=do_trials, args=(3,))
+bot4 = multiprocess.Process(target=do_trials, args=(4,))
 
 bot1.start()
 bot2.start()
