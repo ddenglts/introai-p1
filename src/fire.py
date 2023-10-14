@@ -70,7 +70,7 @@ def _num_adj_fire_cells(grid: List[List[int]], curr: Tuple[int, int]) -> int:
 # def spread(grid: List[List[int]], q: float) -> None:
 #     future_on_fire_cells = []
 #     on_fire_cells = _get_on_fire_cells(grid)
-#     print(on_fire_cells)
+#     ###p.rint(on_fire_cells)
 #     for cell in on_fire_cells:
 #         adj = []
 #         k = 0
@@ -107,6 +107,6 @@ def _num_adj_fire_cells(grid: List[List[int]], curr: Tuple[int, int]) -> int:
 #         future_on_fire_cells.append((x,y))
     
 #     #update ship grid to spread calculations
-#     print(adj)
+#     ###p.rint(adj)
 #     for i in adj:
 #         grid[i[0]][i[1]] = -1

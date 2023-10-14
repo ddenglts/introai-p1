@@ -12,8 +12,8 @@ def do_trials(bot_type):
     bot_poses = bot_poses.tolist()
 
     BOT_TESTS_PER_Q = len(ship_grids)
-    Q_INCREMENT = 0.05
-    GRID_SIZE = 75
+    Q_INCREMENT = 0.025
+    GRID_SIZE = 50
 
     num_tests = (int(1/Q_INCREMENT) + 1) * BOT_TESTS_PER_Q
 

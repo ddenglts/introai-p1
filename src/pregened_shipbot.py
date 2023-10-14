@@ -2,8 +2,8 @@ import Ship
 import numpy as np
 import random
 
-NUM_SHIPS = 25
-GRID_SIZE = 75
+NUM_SHIPS = 50
+GRID_SIZE = 50
 
 ship_grids = []
 bot_poses = []

@@ -1,11 +1,29 @@
+BY: DAVID DENG & SARTHAK JIAN
+
+**Special Notes**:
++ tests were done using a collection of 50 random ship layouts of size 50. pregened_shipbot.py generates such ships,
+and then creates/updates 2 npy files called "bot_poses.py" and "ship_grids.py".
+
+
+
 1. Explain the design and algorithm for your Bot 4, being as specific as possible as to what your bot is actually
 doing. How does your bot factor in the available information to make more informed decisions about what to
 do next?
+
+Bot 4 is a combination of using A-star with euclidean distance from bot to button as the herustic, and Bot 3's 
+cautiousness. Bot 4 first uses Algo.cautious() to effectively get a view of ship where fire has spread with 100% chance in all 
+possible directions for the fire. It then uses this view with A* to generate a path like Bot 3. If no such path is found, 
+it then reverts to a regular view of the ship, and pathfinds with A*. Although A* will not improve the success rate of bot 4, 
+it makes the computation faster. It is the 2nd fastest bot in computation time.
 
 2, For each bot, repeatedly generate test environments and evaluate the performance of the bot, for many values
 of q between 0 and 1. Graph the probability (or average frequency, rather) of the bot successfully putting out
 the fire. Be sure to repeat the experiment enough times to get accurate results for each bot, and each tested
 value of q.
+
+The data for the results are in folder called Graph Data. In this 5 folder, we have 5 graphs. One that contains the success rate
+for all 5 bots. We also have another graph for each bot individually. We calculated the success rate for each bot for each value of
+q by the number of successes divided by the number of trials. 
 
 3, When bots fail or get trapped by the fire, why do they fail? Was there a better decision they could have made
 that would have saved them? Why or why not? Support your conclusions.
@@ -28,6 +46,19 @@ will still only look one timestep into the future and can easily be trapped by t
 make a better decision by considering more than 1 timestep in the future. As a result, Bot 3 is more likely to escape the fire, and less
 likely to get trapped. In the interest computational power, we will scale how far Bot 3 looks into the future based on the size of the
 ship. For example, if the size of the ship is 10 x 10, it will not look as far into the future compared to a ship that has a size 100 x 100.
+
+Bot 4's occasional failures can be due to a mix of algorithmic decisions and the dynamic nature of the spreading fire. 
+At its core, the bot uses the A* algorithm, which prioritizes paths based on a heuristic - in this case, the straight-line (Euclidean)
+ distance to the goal. This heuristic might sometimes lead the bot to choose for the seemingly shortest route without adequately 
+ accounting for potential risks posed by the fires. Though efficient in simpler contexts, in a grid with fire hazards, merely 
+ considering distance might push the bot into riskier areas of the ship. For instance, the bot could get cornered if it chooses a 
+ short path that later gets blocked by spreading fires. It might not always anticipate and dodge the fire effectively. A potential 
+ enhancement would be to refine the heuristic. Introducing a risk factor, where cells near fires or potential fire paths have a penalty 
+ could help increase its success rate. This would make the bot weigh safety alongside distance, which would provide a better balance in 
+ decision-making. But beyond the heuristic, the bot's strategy doesn't fully use available information. The dynamic fire spread means 
+ the environment constantly changes, and the bot's decisions should be more adaptive to this. For instance, having more frequent 
+ replanning could also help Bot 4 make more informed choices and potentially improve its success rate.
+
 
 4. Speculate on how you might construct the ideal bot. What information would it use, what information would
 it compute, and how?

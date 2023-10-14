@@ -63,12 +63,12 @@ def a_star(grid: List[List[int]], start: Tuple[int, int], goal: Tuple[int, int])
     parents = {}
     parents[start] = None
 
-    g_scores = {start: 0}
-    f_scores = {start: _heuristic(start, goal)}
+    to_start = {start: 0}
+    to_goal = {start: _heuristic(start, goal)}
 
     visited = {start}
 
-    fringe = [(f_scores[start], start)]
+    fringe = [(to_goal[start], start)]
 
     while fringe:
         curr_f, curr = heappop(fringe)
@@ -86,14 +86,14 @@ def a_star(grid: List[List[int]], start: Tuple[int, int], goal: Tuple[int, int])
 
         children = _get_unvisited_children(grid, visited, curr)
         for child in children:
-            g_score = g_scores[curr] + 1
-            if child in g_scores and g_score >= g_scores[child]:
+            start_c = to_start[curr] + 1
+            if child in to_start and start_c >= to_start[child]:
                 continue
             visited.add(child)
             parents[child] = curr
-            g_scores[child] = g_score
-            f_scores[child] = g_score + _heuristic(child, goal)
-            heappush(fringe, (f_scores[child], child))
+            to_start[child] = start_c
+            to_goal[child] = start_c + _heuristic(child, goal)
+            heappush(fringe, (to_goal[child], child))
 
     return None
 
