@@ -60,3 +60,7 @@ bot4.join()
 
 
 print("done collecting avgs")
+
+
+# temp = np.zeros((4, int(1/0.05 + 1)))
+# np.save('tests_bot3_1614554763.npy', temp)
