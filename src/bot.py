@@ -85,7 +85,7 @@ class Bot():
         return True
     
     
-        def _move_4(self, grid: List[List[int]]) -> bool:
+    def _move_4(self, grid: List[List[int]]) -> bool:
         """
         Moves the bot one step closer to the goal, using the A* algorithm and also integrates the behavior of Bot 3.
         Returns True if the bot moved once successfully, False if no path was found.
