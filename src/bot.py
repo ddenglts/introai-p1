@@ -85,47 +85,32 @@ class Bot():
         return True
     
     
-    def _move_4(self, grid: List[List[int]]) -> bool:
+        def _move_4(self, grid: List[List[int]]) -> bool:
         """
-        Moves the bot one step closer to the goal, using the BFS algorithm.
+        Moves the bot one step closer to the goal, using the A* algorithm and also integrates the behavior of Bot 3.
         Returns True if the bot moved once successfully, False if no path was found.
-
-        # !!! BAD THING: THE BOT DOESNT GET WORRIED WHEN THE FIRE IS SOON TO BURN THE BUTTON, IT STILL GOES AWAY FROM THE FIRE
-        # """
+        """
         button_pos = Algo.find(grid, 2)
         if (button_pos == None):
-            ###p.rint("!!! No button found")
+            # print("!!! No button found")
             return False
 
-        # get the path to the goal
-        util_fire = Algo.get_utils(grid, button_pos)
-        self.path = Algo.ufcs(grid, util_fire, self.pos)
+        # Step 1: Use A* on the cautious_grid
+        cautious_grid = Algo.cautious(grid)
+        self.path = Algo.a_star(cautious_grid, self.pos, button_pos)
+
+        # Step 2: If no path is found in cautious_grid, use A* on the actual grid
         if self.path == None:
-            ###p.rint("Sorry you have been burned to a crisp")
-            ###p.rint("No path found")
+            self.path = Algo.a_star(grid, self.pos, button_pos)
+            
+        # Step 3: If still no path is found, bot has failed.
+        if self.path == None:
+            # print("Sorry you have been burned to a crisp")
+            # print("No path found")
             return False
-        #pop starting position so [0] is next move
+
+        # If path is found, pop starting position so [0] is the next move
         self.path.pop(0)
         # move the bot
         self.pos = self.path.pop(0)
         return True
-        
-        # button_pos = Algo.find(grid, 2)
-        # if not button_pos:
-        #     # No button found
-        #     return False
-
-        # # Get the path to the goal using UCS
-        # path = Algo.ucs(grid, self.pos, button_pos)
-
-        # if not path or len(path) <= 1:
-        #     # No path found or it's just the starting position
-        #     return False
-
-        # # Pop starting position so [0] is next move
-        # path.pop(0)
-
-        # # Move the bot
-        # self.pos = path.pop(0)
-        # return True
-

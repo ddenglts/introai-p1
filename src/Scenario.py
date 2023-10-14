@@ -21,7 +21,9 @@ class Scenario:
                     break
 
         else:
-            self.grid = manual_grid
+            self.grid = []
+            for row in manual_grid:
+                self.grid.append(row.copy())
             self.bot = Bot(bot_type, manual_bot_pos)
             self.time = 0
             self.q = q

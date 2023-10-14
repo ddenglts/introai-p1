@@ -3,10 +3,12 @@ import matplotlib.pyplot as plt
 from Scenario import *
 import glob
 
+ship_grids = np.load('ship_grids.npy')
 
-BOT_TESTS_PER_Q = 10
+
+BOT_TESTS_PER_Q = len(ship_grids)
 Q_INCREMENT = 0.05
-GRID_SIZE = 50
+GRID_SIZE = 75
 
 
 # Load all files that match the pattern 'tests_*.npy'
@@ -22,6 +24,8 @@ tests_avg = np.multiply(tests_avg, 100)
 
 # Plotting the data
 plt.figure()
+
+print(tests_avg[0])
 
 plt.plot(np.arange(0, 1 + Q_INCREMENT, Q_INCREMENT), tests_avg[0], label='Bot 1')
 plt.plot(np.arange(0, 1 + Q_INCREMENT, Q_INCREMENT), tests_avg[1], label='Bot 2')

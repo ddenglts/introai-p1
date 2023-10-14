@@ -6,11 +6,14 @@ import time
 
 
 def do_trials(bot_type):
-    pregened = np.load('shipbot.py')
+    ship_grids = np.load('ship_grids.npy')
+    bot_poses = np.load('bot_poses.npy')
+    ship_grids = ship_grids.tolist()
+    bot_poses = bot_poses.tolist()
 
-    BOT_TESTS_PER_Q = np.size(pregened, 0)
+    BOT_TESTS_PER_Q = len(ship_grids)
     Q_INCREMENT = 0.05
-    GRID_SIZE = 50
+    GRID_SIZE = 75
 
     num_tests = (int(1/Q_INCREMENT) + 1) * BOT_TESTS_PER_Q
 
@@ -21,7 +24,7 @@ def do_trials(bot_type):
 
     for q in np.arange(0, 1 + Q_INCREMENT, Q_INCREMENT):
         for i in range(BOT_TESTS_PER_Q):
-            scenario = Scenario(GRID_SIZE, bot_type, q, manual_grid=pregened[i, 0], manual_bot_pos=pregened[i, 1])
+            scenario = Scenario(GRID_SIZE, bot_type, q, manual_grid=ship_grids[i], manual_bot_pos=tuple(bot_poses[i]))
             while True:
                 out = scenario.timestep()
                 if out in [1, -1]:

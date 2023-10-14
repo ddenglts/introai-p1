@@ -207,7 +207,13 @@ class GridGUI:
 # ]
 
 
-scenario = Scenario(10, 4, 1)
+
+'''
+!!! change BOT_TYPE to 1,2,3,4 to test different bots
+'''
+BOT_TYPE = 4
+
+scenario = Scenario(10, BOT_TYPE, 1)
 ###p.rint("bot pos: ", scenario.bot.pos)
 ###p.rint(f"Flammibility is: {scenario.q * 100}%")
 utils_grid = Algo.get_utils(scenario.grid, Algo.find(scenario.grid, 2))

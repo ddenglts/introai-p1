@@ -2,19 +2,25 @@ import Ship
 import numpy as np
 import random
 
-GRID_SIZE = 50
+NUM_SHIPS = 25
+GRID_SIZE = 75
 
 ship_grids = []
+bot_poses = []
 
-for i in range(GRID_SIZE):
+for i in range(NUM_SHIPS):
     grid = Ship.build(GRID_SIZE)
     bot_pos = (0,0)
     while True:
-                bot_pos = (random.randint(0, GRID_SIZE-1), random.randint(0, GRID_SIZE-1))
-                if grid[bot_pos[0]][bot_pos[1]] == 1:
-                    break
-                      
-    ship_grids[i] = (Ship.build(50), bot_pos) 
+        bot_pos = (random.randint(0, GRID_SIZE-1), random.randint(0, GRID_SIZE-1))
+        if grid[bot_pos[0]][bot_pos[1]] == 1:
+            break
+    ship_grids.append(grid)
+    bot_poses.append(bot_pos)
+    print(f"{i} done")
 
 
-np.save("shipbot.npy", ship_grids)
+
+np.save("ship_grids.npy", ship_grids)
+
+np.save("bot_poses.npy", bot_poses)
